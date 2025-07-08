@@ -26,15 +26,17 @@ const client = wrapOpenAI(new OpenAI({
 //     ]
 // }
 
+
 const pipeline = traceable(async (userRequest: any) => {
   // Use the userRequest (which will be the templateJs object) to make the API call
   // @ts-ignore
-  console.log('User Request:', userRequest.input);
+  console.log('User Request:', typeof userRequest);
+  const parsed = JSON.parse(userRequest);
   // @ts-ignore
   const result = await client.responses.create({
-    model: userRequest.model || 'gpt-4',
-    input: userRequest.input,
-    temperature: userRequest.temperature || 0.2
+    model: parsed.model || 'gpt-4',
+    input: parsed.input,
+    temperature: parsed.temperature || 0.2
   });
   
   return result
@@ -52,8 +54,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
-  console.log('Received request:', req.body.input?.[0].content?.[0]?.text);
+  console.log('Received request:', req.body);
   const requestData = req.body
+  console.log('Request Data:', req);
 
   try {
     const response = await pipeline(requestData);
