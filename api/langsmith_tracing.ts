@@ -49,10 +49,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.status(200).end();
     return;
   }
-  
-  console.log('Received request:', req.body);
-  const requestData = req.body 
-  
+
+  console.log('Received request:', req.body.input?.[0].content?.[0]?.text);
+  const requestData = req.body
+
   try {
     const response = await pipeline(requestData);
     res.status(200).json({ ...response });
