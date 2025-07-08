@@ -11,20 +11,6 @@ const client = wrapOpenAI(new OpenAI({
 }));
 
 
-// export const templateJs = {
-//     "model": "gpt-4",
-//     "temperature": 0.2,
-//     "messages": [
-//         {
-//             "role": "system",
-//             "content": "You are a system assistant, you can provide colors to the user based on user question based on file"
-//         },
-//         {
-//             "role": "user",
-//             "content": "you are a color guider"
-//         }
-//     ]
-// }
 
 
 const pipeline = traceable(async (userRequest: any) => {
@@ -56,8 +42,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   console.log('Received request:', req.body);
   const requestData = req.body
-  console.log('Request Data:', req);
-
+  
   try {
     const response = await pipeline(requestData);
     res.status(200).json({ response });
