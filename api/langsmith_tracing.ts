@@ -29,9 +29,11 @@ const client = wrapOpenAI(new OpenAI({
 const pipeline = traceable(async (userRequest: any) => {
   // Use the userRequest (which will be the templateJs object) to make the API call
   // @ts-ignore
+  console.log('User Request:', userRequest.input);
+  // @ts-ignore
   const result = await client.responses.create({
     model: userRequest.model || 'gpt-4',
-    input: userRequest.messages || [{ role: 'user', content: 'Hello' }],
+    input: userRequest.input,
     temperature: userRequest.temperature || 0.2
   });
   
