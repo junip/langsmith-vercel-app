@@ -22,7 +22,9 @@ const pipeline = traceable(async (userRequest: any) => {
   const result = await client.responses.create({
     model: parsed.model || 'gpt-4',
     input: parsed.input,
-    temperature: parsed.temperature || 0.2
+    temperature: parsed.temperature || 0.2,
+    text: parsed.text,
+    store: true
   });
   
   return result
