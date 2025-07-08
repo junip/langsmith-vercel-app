@@ -1,0 +1,29 @@
+{
+  "name": "langsmith-vercel-app",
+  "version": "1.0.0",
+  "description": "Vercel + Langsmith integrations",
+  "homepage": "https://github.com/junip/langsmith-vercel-app#readme",
+  "bugs": {
+    "url": "https://github.com/junip/langsmith-vercel-app/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/junip/langsmith-vercel-app.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "langchain": "^0.3.29",
+    "openai": "^5.8.2",
+    "vercel": "^44.2.13"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.10"
+  }
+}
