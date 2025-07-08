@@ -55,7 +55,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const response = await pipeline(requestData);
-    res.status(200).json({ ...response });
+    res.status(200).json({ response });
   } catch (error: any) {
     console.error('Error:', error);
     res.status(500).json({ error: error.message });
