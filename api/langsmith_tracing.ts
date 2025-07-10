@@ -13,20 +13,20 @@ const client = wrapOpenAI(new OpenAI({
 
 
 const pipeline = traceable(async (userRequest: UserRequest) => {
-  console.log('User Request:', userRequest);
-  
-  const messages = userRequest.input.map(item => ({
-    role: item.role,
-    content: item.content.map(c => c.text).join(' ')
-  }));
-
-  const result = await client.chat.completions.create({
+  console.log('Request body:', userRequest);
+ 
+  // @ts-ignore
+  const result = await client.responses.create({
     model: userRequest.model || 'gpt-4',
-    messages: messages,
+    input: userRequest.input,
     temperature: userRequest.temperature || 0.2,
+    text: userRequest.text,
+    store: userRequest.store || true,
+    previous_response_id: userRequest.previous_response_id || null,
+    service_tier: userRequest.service_tier || 'default',
     top_p: userRequest.top_p || 1.0,
   });
-  
+
   return result;
 });
 
@@ -41,7 +41,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   console.log('Received request:', req.body);
-  const requestData: UserRequest = req.body;
+  const requestData: any = req.body;
   
   try {
     const response = await pipeline(requestData);

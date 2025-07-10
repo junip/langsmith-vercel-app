@@ -17,7 +17,8 @@ A serverless API built with Vercel that integrates OpenAI's GPT models with Lang
    ```bash
    npm install
    ```
-3. **Set up environment variables**
+3. **install vercel globally**
+4. **Set up environment variables**
    
    Create a `.env.local` file in the root directory:
    ```env
@@ -31,7 +32,7 @@ A serverless API built with Vercel that integrates OpenAI's GPT models with Lang
 
 1. **Start the development server**
    ```bash
-   vercel dev
+   npx run vercel
    ```
    
    The API will be available at `http://localhost:3000`

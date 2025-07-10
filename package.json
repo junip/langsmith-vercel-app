@@ -15,7 +15,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "dev": "vercel",
+    "dev": "npx run vercel",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
