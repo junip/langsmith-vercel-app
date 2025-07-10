@@ -1,4 +1,4 @@
-// api/langsmith.ts
+
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { OpenAI } from 'openai';
 import { traceable } from 'langsmith/traceable';
@@ -14,7 +14,6 @@ const client = wrapOpenAI(new OpenAI({
 
 
 const pipeline = traceable(async (userRequest: any) => {
-  // Use the userRequest (which will be the templateJs object) to make the API call
   // @ts-ignore
   console.log('User Request:', typeof userRequest);
   const parsed = JSON.parse(userRequest);
@@ -24,19 +23,17 @@ const pipeline = traceable(async (userRequest: any) => {
     input: parsed.input,
     temperature: parsed.temperature || 0.2,
     text: parsed.text,
-    store: true
+    store: parsed.store || true
   });
   
   return result
 });
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.setHeader('Access-Control-Allow-Methods', 'POST');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   
-  // Handle preflight requests
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
