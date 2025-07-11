@@ -31,7 +31,15 @@ const pipeline = traceable(async (userRequest: UserRequest) => {
 });
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  const allowedOrigins: string[] = [
+    'http://localhost:3000',
+    'https://qa2-a.1800accountant.com'
+  ];
+  
+  const origin = req.headers.origin;
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
   res.setHeader('Access-Control-Allow-Methods', 'POST');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   
