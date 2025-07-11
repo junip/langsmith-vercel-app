@@ -1,4 +1,4 @@
-# LangSmith Integration with OpenAI - Vercel Serverless API
+# OpenAI + Langsmith integrations- Vercel Serverless API
 
 A serverless API built with Vercel that integrates OpenAI's GPT models with LangSmith 
 
