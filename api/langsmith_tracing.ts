@@ -3,6 +3,7 @@ import { OpenAI } from 'openai';
 import { traceable } from 'langsmith/traceable';
 import { wrapOpenAI } from 'langsmith/wrappers';
 import { UserRequest } from '../model/UserRequest';
+import { setCorsHeaders } from '../utility/request-handler';
 
 
 //@ts-ignore
@@ -13,7 +14,6 @@ const client = wrapOpenAI(new OpenAI({
 
 
 const pipeline = traceable(async (userRequest: UserRequest) => {
-  console.log('Request body:', userRequest);
  
   // @ts-ignore
   const result = await client.responses.create({
@@ -31,24 +31,12 @@ const pipeline = traceable(async (userRequest: UserRequest) => {
 });
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const allowedOrigins: string[] = [
-    'http://localhost:3000',
-    'https://qa2-a.1800accountant.com'
-  ];
-  
-  const origin = req.headers.origin;
-  if (origin && allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-  res.setHeader('Access-Control-Allow-Methods', 'POST');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  
+  setCorsHeaders(req, res);
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
   }
 
-  console.log('Received request:', req.body);
   const requestData: any = req.body;
   
   try {
